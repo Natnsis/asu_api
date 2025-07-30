@@ -1,10 +1,12 @@
 import express from "express";
-import newsRoutes from "./routes/newsRoutes"
+import newsRoutes from "./routes/newsRoutes";
+import curriculumRoutes from "./routes/curriculumRoutes";
 const app = express();
 app.use(express.json());
 
 // Routes
 app.use("/news", newsRoutes);
+app.use("/curriculums", curriculumRoutes);
 
 app.get("/", (req, res) => {
   res.send("welcome to the backend");
