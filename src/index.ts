@@ -3,6 +3,7 @@ import newsRoutes from "./routes/newsRoutes";
 import curriculumRoutes from "./routes/curriculumRoutes";
 import scheduleRoutes from "./routes/scheduleRoutes";
 import galleryRoutes from "./routes/galleryRoutes";
+import aboutRoutes from "./routes/aboutRoutes";
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use("/news", newsRoutes);
 app.use("/curriculums", curriculumRoutes);
 app.use("/schedules", scheduleRoutes);
 app.use("/gallery", galleryRoutes);
+app.use("/about", aboutRoutes);
 
 app.get("/", (req, res) => {
   res.send("welcome to the backend");
