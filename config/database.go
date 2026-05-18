@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -12,19 +11,17 @@ import (
 
 var DB *gorm.DB
 
-func ConnectDb() {
+func DbConnection() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("error, cant get dontenv file")
+		log.Fatal("couldn't load env file")
 	}
 
-	db_url := os.Getenv("DATABASE_URL")
-	conn, err := gorm.Open(postgres.Open(db_url), &gorm.Config{})
+	database_url := os.Getenv("DATABASE_URL")
+	conn, err := gorm.Open(postgres.Open(database_url), &gorm.Config{})
 	if err != nil {
-		log.Fatal("couldnt connect to db")
+		log.Fatal("unable to connect to the db")
 	}
-
-	fmt.Println("connected to db")
 
 	DB = conn
 }

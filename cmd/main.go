@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
+
 	"unicore/config"
 )
 
 func main() {
-	config.ConnectDb()
-
+	config.DbConnection()
 	db := config.DB
-	db.AutoMigrate()
+
+	fmt.Println("we got a server")
 }
