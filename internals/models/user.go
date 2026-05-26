@@ -9,4 +9,5 @@ type User struct {
 	RoleId          []string
 	Status          string
 	TotalInvitation int
+	UniversityId    string
 }

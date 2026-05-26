@@ -25,4 +25,6 @@ type Lounge struct {
 	ClosingTime          time.Time
 	AvailbleDays         []string
 	AllowedDepartmentIds []string
+	ManagedBy            string
+	Status               string
 }
