@@ -10,4 +10,7 @@ type Profile struct {
 	AvatarUrl string
 	Address   string
 	Major     string
+
+	// belongs to (optional) one to one
+	User *User `gorm:"foreignKey:UserID"`
 }

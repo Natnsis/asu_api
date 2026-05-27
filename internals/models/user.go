@@ -10,4 +10,6 @@ type User struct {
 	Status          string
 	TotalInvitation int
 	UniversityId    string
+	// has one
+	Profile Profile `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
