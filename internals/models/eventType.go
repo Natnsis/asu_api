@@ -6,4 +6,7 @@ type EventType struct {
 	gorm.Model
 	Name        string
 	Description string
+
+	// belongs to
+	Event Event
 }
