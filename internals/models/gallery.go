@@ -14,4 +14,5 @@ type Gallery struct {
 	TargetAudience      string
 	AllowLikes          bool
 	Likes               int
+	AlbumId             Album
 }
