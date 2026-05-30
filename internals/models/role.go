@@ -6,4 +6,5 @@ type Role struct {
 	gorm.Model
 	Name string
 	User []User
+	Role []Role
 }

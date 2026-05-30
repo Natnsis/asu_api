@@ -5,12 +5,14 @@ import "gorm.io/gorm"
 type Department struct {
 	gorm.Model
 	Name          string
+	Status        string
 	Code          string
-	CollegeId     string
 	HeadName      string
 	OfficeAddress string
-	Instructors   []string
-	Status        string
-	Department    []Curriculum
-	User          []User
+
+	CollegeId string
+
+	Instructors []string
+	Department  []Curriculum
+	User        []User
 }

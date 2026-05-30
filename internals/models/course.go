@@ -2,9 +2,10 @@ package models
 
 import "gorm.io/gorm"
 
-type LoungeTypes struct {
+type Course struct {
 	gorm.Model
 	Name        string
+	CreditHour  float32
 	Description string
-	Lounge      []Lounge
+	Curriculum  Curriculum
 }

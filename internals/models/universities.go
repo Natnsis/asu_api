@@ -1,13 +1,15 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+)
 
-type Universities struct {
+type University struct {
 	gorm.Model
 	Name                    string
 	Description             string
 	EstablishedYear         string
-	UniversityType          string
 	AccreditionStatus       string
 	LogoUrl                 string
 	CoverImageUrl           string
@@ -30,8 +32,9 @@ type Universities struct {
 	MainAdminId             string
 	MaxAdminAllowed         int
 	MaxStudentsAllowed      int
-	SocialLinkID            string
-	UniversityID            uint
+	SocialLinkID            datatypes.JSONSlice[string]
+	UniversityTypeId        uint
 	College                 []College
 	SocialLink              []SocialLink
+	UniversityType          UniversityType
 }

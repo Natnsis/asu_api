@@ -1,18 +1,25 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+)
 
 type Curriculum struct {
 	gorm.Model
-	SemesterId      string
-	CourseId        string
 	IsMandatory     bool
 	MinPassingGrade float32
-	CreditHour      int
 	description     string
-	DepartmentID    uint
 
-	PrerequisiteCourseIds []string
-	Department            Department
-	StudentTypeIds        []string // regular, summer, half-year, postgrad
+	PrerequisiteCourseIds datatypes.JSONSlice[string]
+	StudentTypeIds        datatypes.JSONSlice[string]
+	CourseID              uint
+	SemesterId            uint
+	CourseId              uint
+	DepartmentID          uint
+
+	Course      []Course
+	Semester    Semester
+	Department  Department
+	StudentType StudentType
 }
