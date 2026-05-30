@@ -15,4 +15,5 @@ type College struct {
 	DeanId          string
 	ViceDeanId      string
 	Status          string
+	Universities    Universities
 }

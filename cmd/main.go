@@ -10,5 +10,5 @@ import (
 func main() {
 	db.ConnectDb()
 	models.AutoMigrateModels()
-	fmt.Println("server is running")
+	fmt.Println("server is running...")
 }

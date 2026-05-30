@@ -7,7 +7,7 @@ type Universities struct {
 	Name                    string
 	Description             string
 	EstablishedYear         string
-	UniversityType          string // government, private..
+	UniversityType          string
 	AccreditionStatus       string
 	LogoUrl                 string
 	CoverImageUrl           string
@@ -31,4 +31,6 @@ type Universities struct {
 	MainAdminId             string
 	MaxAdminAllowed         int
 	MaxStudentsAllowed      int
+	UniversityID            uint
+	College                 []College
 }

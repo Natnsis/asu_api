@@ -10,5 +10,6 @@ type Profile struct {
 	AvatarUrl string
 	Address   string
 	Major     string
-	UserId    uint `gorm:"unique;not null"`
+	User      User
+	UserID    uint
 }

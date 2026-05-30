@@ -6,10 +6,9 @@ type User struct {
 	gorm.Model
 	Email           string
 	PasswordHash    string
-	RoleIds         []uint
+	RoleID          []uint
 	Status          string
 	TotalInvitation int
 	UniversityId    string
-	Role            Role    `gorm:"foreignKey:RoleID"`
-	Profile         Profile `gorm:"constraint:OnDelete:CASCADE"`
+	Role            Role
 }
