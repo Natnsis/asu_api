@@ -27,4 +27,6 @@ type Lounge struct {
 	AllowedDepartmentIds []string
 	ManagedBy            string
 	Status               string
+	LoungeTypesID        uint
+	LoungeTypes          LoungeTypes
 }

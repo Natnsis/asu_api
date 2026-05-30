@@ -7,11 +7,17 @@ type Event struct {
 	Title              string
 	Subtitle           string
 	Description        string
-	EventTypeId        []string
 	CategoryId         []string
 	ThumbnailUrl       string
 	TargetAudience     []string
 	ApprovedBy         []string
 	MaxParticipants    int
 	AttendanceRequired bool
+	UserID             uint
+	User               User
+	EventTypeID        uint
+	EventCategoriesID  uint
+
+	EventCategories EventCategories
+	EventType       EventType
 }

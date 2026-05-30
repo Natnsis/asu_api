@@ -10,4 +10,6 @@ type RecentActivity struct {
 	Action      string
 	Title       string
 	Description string
+	UserID      uint
+	User        User
 }

@@ -6,4 +6,5 @@ type StudentType struct {
 	gorm.Model
 	Name        string
 	Description string
+	User        []User
 }

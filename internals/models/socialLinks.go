@@ -2,8 +2,8 @@ package models
 
 import "gorm.io/gorm"
 
-type Role struct {
+type SocialLink struct {
 	gorm.Model
 	Name string
-	User []User
+	Url  string
 }

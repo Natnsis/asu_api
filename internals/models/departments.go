@@ -11,4 +11,6 @@ type Department struct {
 	OfficeAddress string
 	Instructors   []string
 	Status        string
+	Department    []Curriculum
+	User          []User
 }

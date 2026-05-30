@@ -16,7 +16,6 @@ type Universities struct {
 	SupportEmail            string
 	PhoneNumber             int
 	WebUrl                  string
-	SocialLinks             []string
 	Country                 string
 	Region                  string
 	City                    string
@@ -31,6 +30,8 @@ type Universities struct {
 	MainAdminId             string
 	MaxAdminAllowed         int
 	MaxStudentsAllowed      int
+	SocialLinkID            string
 	UniversityID            uint
 	College                 []College
+	SocialLink              []SocialLink
 }

@@ -7,4 +7,5 @@ type GalleryCategories struct {
 	Name         string
 	UniversityId string
 	Description  string
+	Gallery      []Gallery
 }

@@ -10,6 +10,6 @@ type Profile struct {
 	AvatarUrl string
 	Address   string
 	Major     string
-	User      User
 	UserID    uint
+	User      User
 }

@@ -10,5 +10,13 @@ type User struct {
 	Status          string
 	TotalInvitation int
 	UniversityId    string
+	DepartmentID    uint
+	RecentActivity  []RecentActivity
+	Event           []Event
+	Gallery         []Gallery
+	Department      Department
+	StudentTypeID   uint
+	StudentType     StudentType
+	RoleId          uint
 	Role            Role
 }

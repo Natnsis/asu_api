@@ -7,6 +7,5 @@ type EventType struct {
 	Name        string
 	Description string
 
-	// belongs to
-	Event Event
+	Event []Event
 }

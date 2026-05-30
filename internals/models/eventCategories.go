@@ -7,4 +7,5 @@ type EventCategories struct {
 	Name         string
 	UniversityId string
 	Description  string
+	Event        []Event
 }
