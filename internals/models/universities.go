@@ -34,6 +34,8 @@ type University struct {
 	MaxStudentsAllowed      int
 	SocialLinkID            datatypes.JSONSlice[string]
 	UniversityTypeId        uint
+	User                    []User
+	Event                   []Event
 	College                 []College
 	SocialLink              []SocialLink
 	UniversityType          UniversityType

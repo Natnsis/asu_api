@@ -11,15 +11,18 @@ type Event struct {
 	Subtitle           string
 	Description        string
 	ThumbnailUrl       string
-	RoleID             datatypes.JSONSlice[string]
 	ApprovedByID       uint
 	MaxParticipants    int
 	AttendanceRequired bool
 	UserID             uint
 	EventTypeID        uint
-	EventCategoriesID  datatypes.JSONSlice[string]
+	UniversityID       uint
+
+	EventCategoriesID datatypes.JSONSlice[string]
+	RoleID            datatypes.JSONSlice[string]
 
 	ApprovedBy      User `gorm:"foreignKey:ApprovedByID"`
+	University      University
 	User            User `gorm:"foreignKey:UserID"`
 	EventCategories EventCategories
 	EventType       EventType

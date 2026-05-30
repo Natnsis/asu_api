@@ -7,16 +7,15 @@ import (
 
 type Curriculum struct {
 	gorm.Model
+	SemesterID      uint
 	IsMandatory     bool
 	MinPassingGrade float32
 	description     string
+	DepartmentID    uint
 
 	PrerequisiteCourseIds datatypes.JSONSlice[string]
 	StudentTypeIds        datatypes.JSONSlice[string]
 	CourseID              uint
-	SemesterId            uint
-	CourseId              uint
-	DepartmentID          uint
 
 	Course      []Course
 	Semester    Semester

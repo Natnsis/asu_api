@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+)
 
 type Department struct {
 	gorm.Model
@@ -12,7 +15,7 @@ type Department struct {
 
 	CollegeId string
 
-	Instructors []string
+	Instructors datatypes.JSONSlice[string]
 	Department  []Curriculum
 	User        []User
 }

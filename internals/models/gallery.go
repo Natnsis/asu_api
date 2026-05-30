@@ -11,11 +11,11 @@ type Gallery struct {
 	TargetAudience      string
 	AllowLikes          bool
 	Likes               int
-	AlbumId             Album
-	UserId              uint
-	User                User
+	UserID              uint
 	AlbumID             uint
-	Album               Album
 	GalleryCategoriesID uint
-	GalleryCategories   GalleryCategories
+
+	Album             Album
+	User              User
+	GalleryCategories GalleryCategories
 }
