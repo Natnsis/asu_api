@@ -13,9 +13,9 @@ type Department struct {
 	HeadName      string
 	OfficeAddress string
 
-	CollegeId string
+	CollegeID uint
 
 	Instructors datatypes.JSONSlice[string]
-	Department  []Curriculum
+	Curriculum  []Curriculum
 	User        []User
 }

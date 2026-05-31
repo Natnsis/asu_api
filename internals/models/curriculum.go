@@ -10,15 +10,14 @@ type Curriculum struct {
 	SemesterID      uint
 	IsMandatory     bool
 	MinPassingGrade float32
-	description     string
+	Description     string
 	DepartmentID    uint
 
 	PrerequisiteCourseIds datatypes.JSONSlice[string]
-	StudentTypeIds        datatypes.JSONSlice[string]
-	CourseID              uint
+	StudentTypeID uint
 
-	Course      []Course
-	Semester    Semester
-	Department  Department
+	Course     []Course
+	Semester   Semester
+	Department Department
 	StudentType StudentType
 }

@@ -1,9 +1,6 @@
 package models
 
-import (
-	"gorm.io/datatypes"
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type Event struct {
 	gorm.Model
@@ -18,13 +15,11 @@ type Event struct {
 	EventTypeID        uint
 	UniversityID       uint
 
-	EventCategoriesID datatypes.JSONSlice[string]
-	RoleID            datatypes.JSONSlice[string]
+	EventCategoryID uint
 
-	ApprovedBy      User `gorm:"foreignKey:ApprovedByID"`
-	University      University
-	User            User `gorm:"foreignKey:UserID"`
-	EventCategories EventCategories
-	EventType       EventType
-	Role            Role
+	ApprovedBy    User `gorm:"foreignKey:ApprovedByID"`
+	University    University
+	User          User `gorm:"foreignKey:UserID"`
+	EventCategory EventCategories
+	EventType     EventType
 }

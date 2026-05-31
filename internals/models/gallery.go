@@ -6,8 +6,8 @@ type Gallery struct {
 	gorm.Model
 	Title               string
 	CoverImage          string
-	RelatedEventId      string
-	RelatedDepartmentId string
+	RelatedEventID      string
+	RelatedDepartmentID string
 	TargetAudience      string
 	AllowLikes          bool
 	Likes               int

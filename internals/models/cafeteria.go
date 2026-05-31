@@ -11,5 +11,5 @@ type Cafeteria struct {
 	FoodName   string
 	FoodImgUrl string
 	IsSpecial  bool
-	notes      string
+	Notes      string
 }

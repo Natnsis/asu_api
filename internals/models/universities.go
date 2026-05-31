@@ -29,7 +29,7 @@ type University struct {
 	ApproximateTotalStaff   int
 	TotalDepartment         int
 	TotalPrograms           int
-	MainAdminId             string
+	MainAdminID             string
 	MaxAdminAllowed         int
 	MaxStudentsAllowed      int
 	SocialLinkID            datatypes.JSONSlice[string]
@@ -37,6 +37,5 @@ type University struct {
 	User                    []User
 	Event                   []Event
 	College                 []College
-	SocialLink              []SocialLink
 	UniversityType          UniversityType
 }

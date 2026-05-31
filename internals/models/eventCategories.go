@@ -6,5 +6,5 @@ type EventCategories struct {
 	gorm.Model
 	Name        string
 	Description string
-	Event       []Event
+	Event       []Event `gorm:"foreignKey:EventCategoryID"`
 }

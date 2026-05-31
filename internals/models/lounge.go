@@ -25,11 +25,10 @@ type Lounge struct {
 	ClosingTime         time.Time
 	AvailbleDays        datatypes.JSONSlice[string]
 	AllowedDepartmentID datatypes.JSONSlice[string]
-	LoungeTypesID       datatypes.JSONSlice[string]
+	LoungeTypeID        uint
 
-	ManagedBy          string
-	Status             string
-	Manager            []Role
-	AllowedDepartments []Department `gorm:"foreignKey:AllowedDepartmentID"`
-	LoungeType         LoungeType
+	ManagedBy  uint
+	Status     string
+	Manager    Role `gorm:"foreignKey:ManagedBy"`
+	LoungeType LoungeType
 }

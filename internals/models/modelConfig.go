@@ -30,7 +30,6 @@ func AutoMigrateModels() {
 		UniversityType{},
 		&User{},
 		&Profile{},
-		&Role{},
 	)
 	if err != nil {
 		log.Fatal("unable to migrate db", err)

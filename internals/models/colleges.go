@@ -15,8 +15,8 @@ type College struct {
 	DeanId          string
 	ViceDeanId      string
 	Status          string
-	CollegeID       uint
-	Department      []Department
+	UniversityID    uint
 
-	Universities University
+	Department []Department
+	University University
 }

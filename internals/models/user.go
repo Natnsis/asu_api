@@ -1,15 +1,12 @@
 package models
 
-import (
-	"gorm.io/datatypes"
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
 	Email           string
 	PasswordHash    string
-	RoleID          datatypes.JSONSlice[string]
+	RoleID          uint
 	Status          string
 	TotalInvitation int
 	UniversityID    uint
