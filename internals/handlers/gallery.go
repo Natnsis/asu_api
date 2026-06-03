@@ -16,6 +16,7 @@ func CreateGallery(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&gallery)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	result := db.DbConnection.Create(&gallery)
 	if result.Error != nil {
@@ -51,6 +52,7 @@ func GetSingleGallery(w http.ResponseWriter, r *http.Request) {
 	result := db.DbConnection.First(&gallery, id)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

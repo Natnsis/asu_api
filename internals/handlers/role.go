@@ -16,6 +16,7 @@ func CreateRole(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&role)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	result := db.DbConnection.Create(&role)
 	if result.Error != nil {
@@ -51,6 +52,10 @@ func UpdateRole(w http.ResponseWriter, r *http.Request) {
 	result := db.DbConnection.First(&role, id)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&role); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	role.ID = uint(id)

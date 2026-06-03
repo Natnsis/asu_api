@@ -1,14 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net/http"
 
 	"UniCore/internals/db"
 	"UniCore/internals/models"
+	"UniCore/internals/routes"
 )
 
 func main() {
 	db.ConnectDb()
 	models.AutoMigrateModels()
-	fmt.Println("server is running...")
+	router := routes.SetupRoutes()
+
+	log.Println("server starting on :8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
