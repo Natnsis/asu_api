@@ -30,8 +30,8 @@ type LoginRequest struct {
 }
 
 type AuthResponse struct {
-	Token string       `json:"token"`
-	User  models.User  `json:"user"`
+	Token string      `json:"token"`
+	User  models.User `json:"user"`
 }
 
 func generateJWT(userID, roleID uint) (string, error) {
@@ -49,12 +49,12 @@ func generateJWT(userID, roleID uint) (string, error) {
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		Email        string `json:"email"`
-		Password     string `json:"password"`
-		RoleID       uint   `json:"role_id"`
-		UniversityID uint   `json:"university_id"`
-		DepartmentID uint   `json:"department_id"`
-		StudentTypeID uint  `json:"student_type_id"`
+		Email         string `json:"email"`
+		Password      string `json:"password"`
+		RoleID        *uint  `json:"role_id"`
+		UniversityID  *uint  `json:"university_id"`
+		DepartmentID  *uint  `json:"department_id"`
+		StudentTypeID *uint  `json:"student_type_id"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -72,20 +72,24 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user := models.User{
-		Email:        req.Email,
-		PasswordHash: string(hash),
-		RoleID:       req.RoleID,
-		UniversityID: req.UniversityID,
-		DepartmentID: req.DepartmentID,
+		Email:         req.Email,
+		PasswordHash:  string(hash),
+		RoleID:        req.RoleID,
+		UniversityID:  req.UniversityID,
+		DepartmentID:  req.DepartmentID,
 		StudentTypeID: req.StudentTypeID,
-		Status:       "active",
+		Status:        "active",
 	}
 	if err := db.DbConnection.Create(&user).Error; err != nil {
 		http.Error(w, err.Error(), http.StatusConflict)
 		return
 	}
 
-	token, err := generateJWT(user.ID, user.RoleID)
+	var roleID uint
+	if user.RoleID != nil {
+		roleID = *user.RoleID
+	}
+	token, err := generateJWT(user.ID, roleID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -118,7 +122,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := generateJWT(user.ID, user.RoleID)
+	var roleID uint
+	if user.RoleID != nil {
+		roleID = *user.RoleID
+	}
+	token, err := generateJWT(user.ID, roleID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

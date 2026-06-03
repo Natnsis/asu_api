@@ -11,5 +11,5 @@ type Profile struct {
 	Address   string
 	Major     string
 	UserID    uint
-	User      User
+	User      *User
 }
