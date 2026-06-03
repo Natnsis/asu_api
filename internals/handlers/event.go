@@ -16,6 +16,7 @@ func CreateEvent(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&event)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	result := db.DbConnection.Create(&event)
 	if result.Error != nil {
@@ -51,6 +52,7 @@ func GetSingleEvent(w http.ResponseWriter, r *http.Request) {
 	result := db.DbConnection.First(&event, id)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

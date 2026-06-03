@@ -16,6 +16,7 @@ func CreateDepartment(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&department)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	result := db.DbConnection.Create(&department)
 	if result.Error != nil {
@@ -51,6 +52,7 @@ func GetSingleDepartment(w http.ResponseWriter, r *http.Request) {
 	result := db.DbConnection.First(&department, id)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -65,10 +67,14 @@ func UpdateDepartment(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	var department models.Curriculum
+	var department models.Department
 	result := db.DbConnection.First(&department, id)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&department); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	department.ID = uint(id)
