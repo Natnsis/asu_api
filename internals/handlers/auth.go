@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"UniCore/internals/db"
 	"UniCore/internals/models"
 
 	"golang.org/x/crypto/bcrypt"
@@ -25,8 +26,8 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Password must be atleast 8 characters", http.StatusBadRequest)
 		return
 	}
-	// hash password
 
+	// hash password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		http.Error(w, "Unable to hash passwords", http.StatusBadRequest)
@@ -39,5 +40,17 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		Password: string(hashedPassword),
 		FullName: req.FullName,
 	}
+
 	// save user
+	if result := db.Db.Create(&newUser); result.Error != nil {
+		http.Error(w, "user saved successfully", http.StatusCreated)
+	}
+
+	// w data
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(newUser)
+}
+
+func LoginUser(w http.ResponseWriter, r *http.Request) {
 }

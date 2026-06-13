@@ -19,11 +19,12 @@ func DbConnection() {
 	log.Println("env file loaded!")
 
 	// get url
-	database_url := os.Getenv("LOCAL_DATABASE_URL")
+	database_url := os.Getenv("DATABASE_URL")
 	conn, err := gorm.Open(postgres.Open(database_url), &gorm.Config{})
 	if err != nil {
 		log.Fatal("connection failed")
 	}
+	log.Println("database connected!")
 
 	// showing connection
 	Db = conn
