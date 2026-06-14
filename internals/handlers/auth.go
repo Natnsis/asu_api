@@ -18,9 +18,30 @@ type LoginRequest struct {
 	Password string
 }
 
+type RefreshToken struct {
+	ID        uint      `gorm:"primaryKey"`
+	UserID    uint      `gorm:"not null"`
+	Token     string    `gorm:"uniqueIndex;not null"`
+	ExpiresAt time.Time `gorm:"not null"`
+}
+
+type RefreshRequest struct {
+	RefreshToken string `json:"refresh_token"`
+}
+
 type LoginRespose struct {
 	Message string `json:"message"`
 	Token   string `json:"token"`
+}
+
+func GenerateAccessToken(userID uint) (string, error) {
+	claims := jwt.MapClaims{
+		"sub": userID,
+		"exp": time.Now().Add(time.Minute * 15).Unix(), // 15 Minute short lifespan
+		"iat": time.Now().Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
@@ -122,4 +143,82 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
+}
+
+// LogoutHandler - POST /logout
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	// Parse the body to find out which token to destroy
+	var payload RefreshRequest // Reusing the struct from the refresh step
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid payload"})
+		return
+	}
+
+	// Delete the token tracking record using GORM
+	// Unscoped() completely purges the record instead of soft-deleting it
+	result := db.Db.Unscoped().Where("token = ?", payload.RefreshToken).Delete(RefreshToken{})
+
+	if result.Error != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Could not complete logout action"})
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out successfully. Token revoked."})
+}
+
+// RefreshHandler - POST /refresh
+func RefreshHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	var payload RefreshRequest
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid payload"})
+		return
+	}
+
+	// 1. Look up the refresh token in the DB
+	var storedToken RefreshToken
+	if err := db.Db.Where("token = ?", payload.RefreshToken).First(&storedToken).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid refresh token"})
+		return
+	}
+
+	// 2. Check if the refresh token has expired
+	if time.Now().After(storedToken.ExpiresAt) {
+		db.Db.Delete(&storedToken) // Clean up expired token from DB
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Refresh token expired. Please login again."})
+		return
+	}
+
+	// 3. Token is valid! Issue a fresh brand new 15-minute access token
+	newAccessToken, err := GenerateAccessToken(storedToken.UserID)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Could not generate access token"})
+		return
+	}
+
+	// 4. Send the new access token back to the frontend
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"access_token": newAccessToken,
+	})
 }

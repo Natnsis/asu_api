@@ -13,8 +13,7 @@ import (
 func main() {
 	db.DbConnection()
 	models.MigrateModels()
-	mux := http.NewServeMux()
-	routes.AuthRouter(mux)
+	router := routes.AuthRoutes()
 	fmt.Println("server is running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
