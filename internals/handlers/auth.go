@@ -3,10 +3,13 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"os"
+	"time"
 
 	"UniCore/internals/db"
 	"UniCore/internals/models"
 
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -16,8 +19,8 @@ type LoginRequest struct {
 }
 
 type LoginRespose struct {
-	message string
-	User    models.User
+	Message string `json:"message"`
+	Token   string `json:"token"`
 }
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
@@ -91,10 +94,32 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	response := LoginRespose{
-		message: "Login successful",
-		User:    user,
+	// generate the jwt claims payload
+	claims := jwt.MapClaims{
+		"sub": user.ID,                               //subject (userID)
+		"exp": time.Now().Add(time.Hour * 24).Unix(), // expires at
+		"iat": time.Now().Unix(),                     // issued at
 	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "jwt secret key is missing"})
+		return
+	}
+
+	tokenString, err := token.SignedString([]byte(jwtSecret))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "failed to generate token"})
+		return
+	}
+
+	response := LoginRespose{
+		Message: "Login successful",
+		Token:   tokenString,
+	}
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
 }
