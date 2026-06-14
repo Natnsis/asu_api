@@ -11,144 +11,115 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
-type contextKey string
-
-const UserCtxKey contextKey = "user"
-
-type Claims struct {
-	UserID uint `json:"user_id"`
-	RoleID uint `json:"role_id"`
-	jwt.RegisteredClaims
-}
-
 type LoginRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string
+	Password string
 }
 
-type AuthResponse struct {
-	Token string      `json:"token"`
-	User  models.User `json:"user"`
+type LoginRespose struct {
+	Message string `json:"message"`
+	Token   string `json:"token"`
 }
 
-func generateJWT(userID, roleID uint) (string, error) {
-	claims := Claims{
-		UserID: userID,
-		RoleID: roleID,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(72 * time.Hour)),
-			IssuedAt:  jwt.NewNumericDate(time.Now()),
-		},
+func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	// get request data
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
-}
-
-func Register(w http.ResponseWriter, r *http.Request) {
-	var req struct {
-		Email         string `json:"email"`
-		Password      string `json:"password"`
-		RoleID        *uint  `json:"role_id"`
-		UniversityID  *uint  `json:"university_id"`
-		DepartmentID  *uint  `json:"department_id"`
-		StudentTypeID *uint  `json:"student_type_id"`
-	}
+	var req models.User
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	if req.Email == "" || req.Password == "" {
-		http.Error(w, "email and password are required", http.StatusBadRequest)
+		http.Error(w, "Unable to fetch user data", http.StatusBadRequest)
 		return
 	}
 
-	hash, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if len(req.Password) < 8 {
+		http.Error(w, "Password must be atleast 8 characters", http.StatusBadRequest)
+		return
+	}
+
+	// hash password
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Unable to hash passwords", http.StatusBadRequest)
 		return
 	}
 
-	user := models.User{
-		Email:         req.Email,
-		PasswordHash:  string(hash),
-		RoleID:        req.RoleID,
-		UniversityID:  req.UniversityID,
-		DepartmentID:  req.DepartmentID,
-		StudentTypeID: req.StudentTypeID,
-		Status:        "active",
-	}
-	if err := db.DbConnection.Create(&user).Error; err != nil {
-		http.Error(w, err.Error(), http.StatusConflict)
-		return
+	// contain the data together
+	newUser := models.User{
+		Email:    req.Email,
+		Password: string(hashedPassword),
+		FullName: req.FullName,
 	}
 
-	var roleID uint
-	if user.RoleID != nil {
-		roleID = *user.RoleID
-	}
-	token, err := generateJWT(user.ID, roleID)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	// save user
+	if result := db.Db.Create(&newUser); result.Error != nil {
+		http.Error(w, "user saved successfully", http.StatusCreated)
 	}
 
+	// w data
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(AuthResponse{Token: token, User: user})
+	json.NewEncoder(w).Encode(newUser)
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func LoginUser(w http.ResponseWriter, r *http.Request) {
+	// method check
+	if r.Method != http.MethodPost {
+		http.Error(w, "only post method works here", http.StatusBadGateway)
+		return
+	}
+
+	// get request data
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "unable to fetch user request", http.StatusBadGateway)
 		return
 	}
 
+	// check email
 	var user models.User
-	if err := db.DbConnection.Where("email = ?", req.Email).Preload("Profile").Preload("Role").First(&user).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
-			http.Error(w, "invalid credentials", http.StatusUnauthorized)
-			return
-		}
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if err := db.Db.Where("email=?", req.Email).First(&user).Error; err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid email"})
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Password)); err != nil {
-		http.Error(w, "invalid credentials", http.StatusUnauthorized)
+	// verify passwords
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Incorrect password"})
 		return
 	}
 
-	var roleID uint
-	if user.RoleID != nil {
-		roleID = *user.RoleID
+	// generate the jwt claims payload
+	claims := jwt.MapClaims{
+		"sub": user.ID,                               //subject (userID)
+		"exp": time.Now().Add(time.Hour * 24).Unix(), // expires at
+		"iat": time.Now().Unix(),                     // issued at
 	}
-	token, err := generateJWT(user.ID, roleID)
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "jwt secret key is missing"})
+		return
+	}
+
+	tokenString, err := token.SignedString([]byte(jwtSecret))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "failed to generate token"})
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(AuthResponse{Token: token, User: user})
-}
-
-func GetMe(w http.ResponseWriter, r *http.Request) {
-	userID, ok := r.Context().Value(UserCtxKey).(uint)
-	if !ok {
-		http.Error(w, "unauthorized", http.StatusUnauthorized)
-		return
+	response := LoginRespose{
+		Message: "Login successful",
+		Token:   tokenString,
 	}
-
-	var user models.User
-	if err := db.DbConnection.Preload("Profile").Preload("Role").Preload("University").Preload("Department").First(&user, userID).Error; err != nil {
-		http.Error(w, "user not found", http.StatusNotFound)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(user)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
 }
