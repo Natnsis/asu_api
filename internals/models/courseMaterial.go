@@ -2,13 +2,25 @@ package models
 
 import "gorm.io/gorm"
 
+// custom types
+type Types string
+
+// custom enum
+const (
+	TypePdf      Types = "pdf"
+	TypeVideo    Types = "video"
+	TypeLink     Types = "link"
+	TypeSlide    Types = "slide"
+	TypeDocument Types = "document"
+)
+
 type CourseMaterial struct {
 	gorm.Model
-	courseId     string
-	uploadedById string
-	title        string
-	types        string
-	url          string
-	weekNumber   int
-	semesterId   string
+	CourseId     string
+	UploadedById string
+	Title        string
+	Types        Types `gorm:"default:'pdf'"`
+	Url          string
+	WeekNumber   int
+	SemesterId   string
 }

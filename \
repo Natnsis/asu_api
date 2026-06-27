@@ -7,15 +7,6 @@ import (
 )
 
 // custom type
-type EventStatus string
-
-// custom enum
-const (
-	EventDraft     EventStatus = "draft"
-	EventPublished EventStatus = "published"
-	EventCancelled EventStatus = "cancelled"
-	EventCompleted EventStatus = "completed"
-)
 
 type Event struct {
 	gorm.Model
@@ -30,5 +21,5 @@ type Event struct {
 	CoverImageUrl        string
 	RequiresRegistration bool
 	MaxAttendees         int
-	Status               EventStatus `gorm:"default:'draft'"`
+	Status               string
 }
