@@ -6,16 +6,30 @@ import (
 	"gorm.io/gorm"
 )
 
+// define custom role
+type UserRole string
+
+// define enum constants
+const (
+	RoleSuperAdmin     UserRole = "super_admin"
+	RoleAdmin          UserRole = "admin"
+	RoleDepartmentHead UserRole = "department_head"
+	RoleLecturer       UserRole = "lecturer"
+	RoleStudent        UserRole = "student"
+	RoleClassRep       UserRole = "class_rep"
+)
+
 type User struct {
 	gorm.Model
-	firstName    string
-	lastName     string
-	email        string
+	FirstName    string
+	LastName     string
+	Email        string
 	passwordHash string
-	phone        string
-	avatarUrl    string
-	universityId string
-	departmentId string
-	isActive     bool
-	lastLoginAt  *time.Time
+	Phone        string
+	AvatarUrl    string
+	UniversityId string
+	DepartmentId string
+	Role         UserRole `gorm:"default:'student'"`
+	IsActive     bool
+	LastLoginAt  *time.Time
 }

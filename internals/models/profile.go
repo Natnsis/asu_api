@@ -8,12 +8,12 @@ import (
 
 type Profile struct {
 	gorm.Model
-	studentId      string
-	programId      string
-	departmentId   string
-	enrollmentYear int
-	currentYear    int
-	status         string
-	dateOfBirth    time.Time
-	gender         string
+	StudentId      string
+	ProgramId      string
+	DepartmentId   string
+	EnrollmentYear int
+	CurrentYear    int
+	Status         string
+	DateOfBirth    time.Time
+	Gender         string
 }
