@@ -6,6 +6,25 @@ import (
 	"gorm.io/gorm"
 )
 
+// custom status type and gender type
+type (
+	StatusTypes string
+	GenderTypes string
+)
+
+// custom enums
+const (
+	StatusActive    StatusTypes = "active"
+	StatusSuspended StatusTypes = "suspended"
+	StatusGraduated StatusTypes = "graduated"
+	StatusWithdrawn StatusTypes = "withdrawn"
+)
+
+const (
+	GenderMale   GenderTypes = "male"
+	GenderFemale GenderTypes = "female"
+)
+
 type Profile struct {
 	gorm.Model
 	StudentId      string
@@ -13,7 +32,7 @@ type Profile struct {
 	DepartmentId   string
 	EnrollmentYear int
 	CurrentYear    int
-	Status         string
+	Status         StatusTypes `enum:"default:'active'"`
 	DateOfBirth    time.Time
-	Gender         string
+	Gender         GenderTypes `enum:"default:'male'"`
 }
