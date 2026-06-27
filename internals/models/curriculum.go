@@ -4,13 +4,13 @@ import "gorm.io/gorm"
 
 type Curriculum struct {
 	gorm.Model
-	universityId string
-	departmentId string
-	programId    string
-	lecturerId   string
-	name         string
-	code         string
-	creditHours  int
-	descritpion  string
-	isElective   bool
+	UniversityId string
+	DepartmentId string
+	ProgramId    string
+	LecturerId   string
+	Name         string
+	Code         string
+	CreditHours  int
+	Descritpion  string
+	IsElective   bool
 }

@@ -8,9 +8,9 @@ import (
 
 type Semester struct {
 	gorm.Model
-	universityId string
-	name         string
-	startDate    time.Time
-	endDate      time.Time
-	isCurrent    bool
+	UniversityId string
+	Name         string
+	StartDate    time.Time
+	EndDate      time.Time
+	IsCurrent    bool
 }
