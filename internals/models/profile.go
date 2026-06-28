@@ -27,6 +27,7 @@ const (
 
 type Profile struct {
 	gorm.Model
+	UserID         uint
 	StudentId      string
 	ProgramId      string
 	DepartmentId   string
@@ -35,4 +36,5 @@ type Profile struct {
 	Status         StatusTypes `enum:"default:'active'"`
 	DateOfBirth    time.Time
 	Gender         GenderTypes `enum:"default:'male'"`
+	User           User
 }

@@ -27,8 +27,8 @@ type User struct {
 	passwordHash string
 	Phone        string
 	AvatarUrl    string
-	UniversityId string
-	DepartmentId string
+	UniversityID uint
+	DepartmentID uint
 	Role         UserRole `gorm:"default:'student'"`
 	IsActive     bool
 	LastLoginAt  *time.Time

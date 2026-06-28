@@ -15,10 +15,12 @@ const (
 
 type Program struct {
 	gorm.Model
-	UniversityId  string
-	DepartmentId  string
+	UniversityID  string
+	DepartmentID  string
 	Name          string
 	Code          string
 	DurationYears int
 	DegreeLevel   DegreeLevel `gorm:"default:'bachlors'"`
+
+	Department Department
 }

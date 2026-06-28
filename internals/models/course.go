@@ -2,10 +2,10 @@ package models
 
 import "gorm.io/gorm"
 
-type Curriculum struct {
+type Course struct {
 	gorm.Model
-	UniversityId string
-	DepartmentId string
+	UniversityID string
+	DepartmentID uint
 	ProgramId    string
 	LecturerId   string
 	Name         string
@@ -13,4 +13,6 @@ type Curriculum struct {
 	CreditHours  int
 	Descritpion  string
 	IsElective   bool
+
+	Department Department
 }
