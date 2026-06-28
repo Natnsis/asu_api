@@ -12,6 +12,7 @@ type Lounge struct {
 	ImageUrl     string
 	IsActive     bool
 
+	University        University
 	LoungeAvailablity []LoungeAvailablity
 	LoungeBooking     []LoungeBooking
 }

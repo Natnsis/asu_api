@@ -8,7 +8,7 @@ import (
 
 type Semester struct {
 	gorm.Model
-	UniversityId string
+	UniversityID uint
 	Name         string
 	StartDate    time.Time
 	EndDate      time.Time

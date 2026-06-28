@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Setting struct {
 	gorm.Model
-	UniverisityId string
+	UniverisityID uint
 	Key           string
 	Value         string
 	Description   string

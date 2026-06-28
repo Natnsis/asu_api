@@ -18,13 +18,14 @@ const (
 
 type Gallery struct {
 	gorm.Model
-	universityId string
-	createdById  string
-	title        string
-	description  string
-	coverMediaId string
-	status       GalleryStatus `gorm:"default:'draft'"`
-	publishedAt  time.Time
+	UniversityID uint
+	CreatedById  string
+	Title        string
+	Description  string
+	CoverMediaId string
+	Status       GalleryStatus `gorm:"default:'draft'"`
+	PublishedAt  time.Time
 
 	GalleryMedia []GalleryMedia
+	University   University
 }

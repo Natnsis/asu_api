@@ -29,12 +29,13 @@ type Profile struct {
 	gorm.Model
 	UserID         uint
 	StudentId      string
-	ProgramId      string
+	ProgramID      uint
 	DepartmentId   string
 	EnrollmentYear int
 	CurrentYear    int
 	Status         StatusTypes `enum:"default:'active'"`
 	DateOfBirth    time.Time
 	Gender         GenderTypes `enum:"default:'male'"`
-	User           User
+
+	User User
 }

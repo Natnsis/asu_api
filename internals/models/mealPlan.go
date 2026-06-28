@@ -18,10 +18,10 @@ const (
 
 type MealPlan struct {
 	gorm.Model
-	CafeteriaID   string
+	CafeteriaID   uint
 	WeekStartDate time.Time
 	WeekEndDate   time.Time
-	CreatedById   string
+	UserID        uint
 	Status        MealType `gorm:"default:'draft'"`
 
 	Cafeteria Cafeteria

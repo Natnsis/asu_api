@@ -8,8 +8,8 @@ import (
 
 type Records struct {
 	gorm.Model
-	eventId      string
-	studentId    string
-	registeredAt time.Time
-	status       string
+	EventID      uint
+	StudentId    string
+	RegisteredAt time.Time
+	Status       string
 }

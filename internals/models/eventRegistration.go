@@ -14,8 +14,11 @@ const (
 
 type EventRegistration struct {
 	gorm.Model
-	EventId      string
-	StudentId    string
+	EventID      uint
+	UserID       uint
 	RegisteredAt string
 	Status       EventStatusType `gorm:"default:'confirmed';"`
+
+	User  User
+	Event Event
 }

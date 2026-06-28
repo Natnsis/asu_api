@@ -20,8 +20,8 @@ const (
 type Event struct {
 	gorm.Model
 	UniversityId         string
-	CategoryId           string
-	CreatedById          string
+	CategoryID           string
+	CreatedByID          string
 	Title                string
 	Descritpion          string
 	Location             string
@@ -31,4 +31,8 @@ type Event struct {
 	RequiresRegistration bool
 	MaxAttendees         int
 	Status               EventStatus `gorm:"default:'draft'"`
+
+	Records           Records
+	EventRegistration []EventRegistration
+	EventCategory     []EventCategory
 }

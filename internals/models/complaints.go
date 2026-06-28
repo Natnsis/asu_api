@@ -29,10 +29,10 @@ const (
 
 type Complaint struct {
 	gorm.Model
-	UniversityId        string
-	StudentId           string
-	CategoryId          string
-	DepartmentId        string
+	UniversityID        uint
+	UserID              uint
+	CategoryID          uint
+	DepartmentID        uint
 	Title               string
 	Descritpion         string
 	AttachmentUrl       string
@@ -42,4 +42,5 @@ type Complaint struct {
 	ResolvedComplaintAt time.Time
 
 	ComplaintResponse []ComplaintResponse
+	ComplaintCategory ComplaintCategory
 }

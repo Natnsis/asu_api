@@ -18,14 +18,18 @@ const (
 
 type Report struct {
 	gorm.Model
-	UniversityId string
-	CategoryId   string
-	CreatedById  string
-	DepartmentId string
+	UniversityID uint
+	CategoryID   uint
+	UserID       uint
+	DepartmentID uint
 	Title        string
 	Description  string
 	FileUrl      string
 	FileType     string
 	Status       ReportStatus `gorm:"ReportStatus='draft'"`
 	PublishedAt  time.Time
+
+	University     University
+	ReportCategory ReportCategory
+	Department     Department
 }

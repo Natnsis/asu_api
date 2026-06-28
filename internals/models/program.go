@@ -22,5 +22,6 @@ type Program struct {
 	DurationYears int
 	DegreeLevel   DegreeLevel `gorm:"default:'bachlors'"`
 
+	Profile    Profile
 	Department Department
 }

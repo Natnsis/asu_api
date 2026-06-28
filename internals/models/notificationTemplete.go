@@ -14,9 +14,11 @@ const (
 
 type NotificationTemplete struct {
 	gorm.Model
-	UniversityId string
+	UniversityID uint
 	Key          string
 	Title        string
 	Body         string
 	Channel      []DeliveryChannels `gorm:"default:'push'"`
+
+	University University
 }

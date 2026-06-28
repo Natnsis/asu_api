@@ -11,6 +11,7 @@ type Department struct {
 	IsActive     bool
 	Programs     []string
 
+	Complaint  Complaint
 	University University // one
 	Course     []Course
 	Program    []Program

@@ -4,6 +4,8 @@ import "gorm.io/gorm"
 
 type ComplaintCategory struct {
 	gorm.Model
-	UniveristyId string
+	UniveristyID uint
 	Name         string
+
+	University University
 }

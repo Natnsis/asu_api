@@ -33,6 +33,10 @@ type User struct {
 	IsActive     bool
 	LastLoginAt  *time.Time
 
-	Notification []Notification
-	Audit        []Audit
+	MealPlan          MealPlan
+	GalleryMedia      []GalleryMedia
+	EventRegistration []EventRegistration
+	Complaint         []Complaint
+	Notification      []Notification
+	Audit             []Audit
 }

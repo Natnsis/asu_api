@@ -19,5 +19,6 @@ type Notification struct {
 	EntryType    string
 	EntryID      string
 
-	User User
+	University University
+	User       User
 }

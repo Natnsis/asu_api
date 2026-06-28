@@ -15,13 +15,14 @@ const (
 
 type GalleryMedia struct {
 	gorm.Model
-	galleryID    uint
-	uplaodedById string
-	types        FileType `gorm:"default:'photo'"`
-	url          string
-	thumbnailUrl string
-	caption      string
-	sortOrder    int
+	GalleryID    uint
+	UserID       uint
+	Types        FileType `gorm:"default:'photo'"`
+	Url          string
+	ThumbnailUrl string
+	Caption      string
+	SortOrder    int
 
 	Gallery Gallery
+	User    User
 }

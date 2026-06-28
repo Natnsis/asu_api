@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Audit struct {
 	gorm.Model
-	UserID        string
-	UniversityID  string
+	UserID        uint
+	UniversityID  uint
 	Action        string
 	EntityType    string
 	EntityId      string
@@ -14,5 +14,6 @@ type Audit struct {
 	IpAddress     string
 	UserAgent     string
 
-	User User
+	User       User
+	University []University
 }

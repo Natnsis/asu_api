@@ -10,7 +10,17 @@ type University struct {
 	address      string
 	contactEmail string `gorm:"not null"`
 	contactPhone string
-	isActive     bool         `gorm:"not null"`
-	Department   []Department // has many
-	User         []User
+	isActive     bool `gorm:"not null"`
+
+	Records              []Records
+	NotificationTemplete []NotificationTemplete
+	Notification         []Notification
+	Lounge               []Lounge
+	EventCategory        []EventCategory
+	Gallery              []Gallery
+	ComplaintCategory    []ComplaintCategory
+	Department           []Department
+	User                 []User
+	Audit                []Audit
+	Setting              Setting
 }
