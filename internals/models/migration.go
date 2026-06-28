@@ -1,14 +1,17 @@
 package models
 
-import "UniCore/internals/config"
+import (
+	"log"
+
+	"UniCore/internals/config"
+)
 
 func AutoMigrateModels() {
-	config.Db.AutoMigrate(
+	err := config.Db.AutoMigrate(
 		&User{},
 		&Audit{},
 		&Cafeteria{},
 		&ComplaintCategory{},
-		&ComplaintResponse{},
 		&ComplaintResponse{},
 		&Complaint{},
 		&Course{},
@@ -21,13 +24,13 @@ func AutoMigrateModels() {
 		&Gallery{},
 		&GalleryMedia{},
 		&Lounge{},
-		&LoungeAvailablity{},
+		&LoungeAvailability{},
 		&LoungeBooking{},
 		&MealOverride{},
 		&MealPlan{},
 		&MealSlot{},
 		&Notification{},
-		&NotificationTemplete{},
+		&NotificationTemplate{},
 		&Profile{},
 		&Program{},
 		&Records{},
@@ -36,6 +39,8 @@ func AutoMigrateModels() {
 		&Semester{},
 		&Setting{},
 		&University{},
-		&User{},
 	)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }

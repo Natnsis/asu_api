@@ -4,9 +4,10 @@ import "gorm.io/gorm"
 
 type EventCategory struct {
 	gorm.Model
-	UniversityID string
+	UniversityID uint
 	Name         string
 	ColorHex     string
 
 	University University
+	Events     []Event
 }

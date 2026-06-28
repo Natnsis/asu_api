@@ -4,16 +4,16 @@ import "gorm.io/gorm"
 
 type University struct {
 	gorm.Model
-	name         string `gorm:"not null"`
-	slug         string `gorm:"uniqueIndex"`
-	logoUrl      string
-	address      string
-	contactEmail string `gorm:"not null"`
-	contactPhone string
-	isActive     bool `gorm:"not null"`
+	Name         string `gorm:"not null"`
+	Slug         string `gorm:"uniqueIndex"`
+	LogoUrl      string
+	Address      string
+	ContactEmail string `gorm:"not null"`
+	ContactPhone string
+	IsActive     bool `gorm:"not null"`
 
 	Records              []Records
-	NotificationTemplete []NotificationTemplete
+	NotificationTemplate []NotificationTemplate
 	Notification         []Notification
 	Lounge               []Lounge
 	EventCategory        []EventCategory

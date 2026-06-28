@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+)
 
 type Lounge struct {
 	gorm.Model
@@ -8,11 +11,11 @@ type Lounge struct {
 	Name         string
 	Location     string
 	Capacity     int
-	Amenities    []string
+	Amenities    datatypes.JSON
 	ImageUrl     string
 	IsActive     bool
 
-	University        University
-	LoungeAvailablity []LoungeAvailablity
-	LoungeBooking     []LoungeBooking
+	University         University
+	LoungeAvailability []LoungeAvailability
+	LoungeBooking      []LoungeBooking
 }

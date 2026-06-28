@@ -33,9 +33,9 @@ type Profile struct {
 	DepartmentId   string
 	EnrollmentYear int
 	CurrentYear    int
-	Status         StatusTypes `enum:"default:'active'"`
+	Status         StatusTypes `gorm:"default:'active'"`
 	DateOfBirth    time.Time
-	Gender         GenderTypes `enum:"default:'male'"`
+	Gender         GenderTypes `gorm:"default:'male'"`
 
 	User User
 }

@@ -8,19 +8,19 @@ type DegreeLevel string
 // define the enum
 const (
 	LevelCertificate DegreeLevel = "certificate"
-	LevelDeploma     DegreeLevel = "deploma"
-	LevelBachlors    DegreeLevel = "bachlors"
+	LevelDiploma     DegreeLevel = "diploma"
+	LevelBachelors   DegreeLevel = "bachelors"
 	LevelMaster      DegreeLevel = "masters"
 )
 
 type Program struct {
 	gorm.Model
-	UniversityID  string
-	DepartmentID  string
+	UniversityID  uint
+	DepartmentID  uint
 	Name          string
 	Code          string
 	DurationYears int
-	DegreeLevel   DegreeLevel `gorm:"default:'bachlors'"`
+	DegreeLevel   DegreeLevel `gorm:"default:'bachelors'"`
 
 	Profile    Profile
 	Department Department

@@ -9,8 +9,8 @@ import (
 type Notification struct {
 	gorm.Model
 	UserID       uint
-	UniveristyID uint
-	TempleteID   string
+	UniversityID uint
+	TemplateID   uint
 	Title        string
 	Body         string
 	Channel      DeliveryChannels

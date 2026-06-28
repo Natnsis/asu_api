@@ -19,11 +19,11 @@ const (
 
 type Event struct {
 	gorm.Model
-	UniversityId         string
-	CategoryID           string
-	CreatedByID          string
+	UniversityId         uint
+	CategoryID           uint
+	CreatedByID          uint
 	Title                string
-	Descritpion          string
+	Description          string
 	Location             string
 	StartDate            time.Time
 	EndDate              time.Time
@@ -32,7 +32,7 @@ type Event struct {
 	MaxAttendees         int
 	Status               EventStatus `gorm:"default:'draft'"`
 
-	Records           Records
+	Records           []Records
 	EventRegistration []EventRegistration
-	EventCategory     []EventCategory
+	EventCategory     EventCategory
 }

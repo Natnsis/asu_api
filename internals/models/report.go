@@ -26,7 +26,7 @@ type Report struct {
 	Description  string
 	FileUrl      string
 	FileType     string
-	Status       ReportStatus `gorm:"ReportStatus='draft'"`
+	Status       ReportStatus `gorm:"default:'draft'"`
 	PublishedAt  time.Time
 
 	University     University

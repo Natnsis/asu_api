@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type LoungeAvailablity struct {
+type LoungeAvailability struct {
 	gorm.Model
 	LoungeID  uint
 	DayOfWeek DaysType

@@ -14,5 +14,5 @@ type Semester struct {
 	EndDate      time.Time
 	IsCurrent    bool
 
-	CourseSchedule CourseSchedule
+	CourseSchedule []CourseSchedule
 }

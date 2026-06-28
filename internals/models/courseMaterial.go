@@ -17,12 +17,12 @@ const (
 type CourseMaterial struct {
 	gorm.Model
 	CourseID     uint
-	UploadedById string
+	UploadedById uint
 	Title        string
 	Types        Types `gorm:"default:'pdf'"`
 	Url          string
 	WeekNumber   int
-	SemesterId   string
+	SemesterID   uint
 
 	Course Course
 }

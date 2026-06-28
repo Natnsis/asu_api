@@ -34,11 +34,11 @@ type Complaint struct {
 	CategoryID          uint
 	DepartmentID        uint
 	Title               string
-	Descritpion         string
+	Description         string
 	AttachmentUrl       string
-	Priority            Priorities `gorm:"default:'log'"`
+	Priority            Priorities `gorm:"default:'low'"`
 	Status              Statuses   `gorm:"default:'submitted'"`
-	AssignedTold        string
+	AssignedToId        uint
 	ResolvedComplaintAt time.Time
 
 	ComplaintResponse []ComplaintResponse

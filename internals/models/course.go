@@ -6,11 +6,11 @@ type Course struct {
 	gorm.Model
 	UniversityID uint
 	DepartmentID uint
-	ProgramID    string
+	ProgramID    uint
 	Name         string
 	Code         string
 	CreditHours  int
-	Descritpion  string
+	Description  string
 	IsElective   bool
 
 	CourseSchedule []CourseSchedule

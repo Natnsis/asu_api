@@ -11,18 +11,18 @@ type GalleryStatus string
 
 // custom enum
 const (
-	GelleryDraft     GalleryStatus = "draft"
-	GelleryPublished GalleryStatus = "published"
-	GelleryArchived  GalleryStatus = "archived"
+	GalleryDraft     GalleryStatus = "draft"
+	GalleryPublished GalleryStatus = "published"
+	GalleryArchived  GalleryStatus = "archived"
 )
 
 type Gallery struct {
 	gorm.Model
 	UniversityID uint
-	CreatedById  string
+	CreatedById  uint
 	Title        string
 	Description  string
-	CoverMediaId string
+	CoverMediaId uint
 	Status       GalleryStatus `gorm:"default:'draft'"`
 	PublishedAt  time.Time
 

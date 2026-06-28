@@ -1,10 +1,13 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+)
 
 type ReportCategory struct {
 	gorm.Model
-	UniversityId string
+	UniversityId uint
 	Name         string
-	AccessRoles  []string
+	AccessRoles  datatypes.JSON
 }

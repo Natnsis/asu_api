@@ -8,7 +8,7 @@ import (
 
 type Cafeteria struct {
 	gorm.Model
-	UniveristyID uint
+	UniversityID uint
 	Name         string
 	Location     string
 	OpenTime     time.Time

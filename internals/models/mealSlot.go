@@ -20,18 +20,18 @@ const (
 )
 
 const (
-	Breakfast MealType = "breakfast"
-	Lunch     MealType = "lunch"
-	Dinner    MealType = "dinner"
+	Breakfast MealTypes = "breakfast"
+	Lunch     MealTypes = "lunch"
+	Dinner    MealTypes = "dinner"
 )
 
 type MealSlot struct {
 	gorm.Model
 	MealPlanID  uint
 	DayOfWeek   DaysType
-	MealPeriod  string
-	MealName    MealType
-	Descritpion string
+	MealPeriod  MealTypes
+	MealName    string
+	Description string
 
 	MealPlan MealPlan
 }

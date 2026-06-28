@@ -14,7 +14,7 @@ type MealOverride struct {
 	IsClosed    bool
 	MealName    string
 	Reason      string
-	CreatedById time.Time
+	CreatedById uint
 
 	Cafeteria Cafeteria
 }

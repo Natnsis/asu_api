@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type ComplaintResponse struct {
 	gorm.Model
 	ComplaintID   uint
-	RespondedById string
+	RespondedById uint
 	Message       string
 	IsInternal    bool
 

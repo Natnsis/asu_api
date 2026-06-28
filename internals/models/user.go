@@ -24,7 +24,7 @@ type User struct {
 	FirstName    string
 	LastName     string
 	Email        string
-	passwordHash string
+	PasswordHash string
 	Phone        string
 	AvatarUrl    string
 	UniversityID uint

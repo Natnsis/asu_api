@@ -15,5 +15,5 @@ type Audit struct {
 	UserAgent     string
 
 	User       User
-	University []University
+	University University
 }
