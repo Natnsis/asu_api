@@ -34,5 +34,5 @@ type Event struct {
 
 	Records           []Records
 	EventRegistration []EventRegistration
-	EventCategory     EventCategory
+	EventCategory     EventCategory `gorm:"foreignKey:CategoryID"`
 }

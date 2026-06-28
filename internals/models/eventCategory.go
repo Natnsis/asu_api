@@ -9,5 +9,5 @@ type EventCategory struct {
 	ColorHex     string
 
 	University University
-	Events     []Event
+	Events     []Event `gorm:"foreignKey:CategoryID"`
 }

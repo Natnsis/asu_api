@@ -42,5 +42,5 @@ type Complaint struct {
 	ResolvedComplaintAt time.Time
 
 	ComplaintResponse []ComplaintResponse
-	ComplaintCategory ComplaintCategory
+	ComplaintCategory ComplaintCategory `gorm:"foreignKey:CategoryID"`
 }

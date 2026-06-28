@@ -30,6 +30,6 @@ type Report struct {
 	PublishedAt  time.Time
 
 	University     University
-	ReportCategory ReportCategory
+	ReportCategory ReportCategory `gorm:"foreignKey:CategoryID"`
 	Department     Department
 }
