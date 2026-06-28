@@ -8,8 +8,8 @@ import (
 
 type LoungeAvailablity struct {
 	gorm.Model
-	loungeId  string
-	dayOfWeek string
-	openTime  time.Time
-	closeTime time.Time
+	LoungeId  string
+	DayOfWeek DaysType
+	OpenTime  time.Time
+	CloseTime time.Time
 }

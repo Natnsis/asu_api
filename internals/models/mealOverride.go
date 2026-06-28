@@ -8,11 +8,11 @@ import (
 
 type MealOverride struct {
 	gorm.Model
-	cafeteriaId string
-	date        time.Time
-	mealPeriod  string
-	isClosed    bool
-	mealName    string
-	reason      string
-	createdById time.Time
+	CafeteriaId string
+	Date        time.Time
+	MealPeriod  MealType
+	IsClosed    bool
+	MealName    string
+	Reason      string
+	CreatedById time.Time
 }

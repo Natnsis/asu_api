@@ -1,25 +1,22 @@
 package models
 
-import (
-	"time"
+import "gorm.io/gorm"
 
-	"gorm.io/gorm"
+// custom types
+type DeliveryChannels string
+
+// custom enum
+const (
+	PushChannel  DeliveryChannels = "push"
+	EmailChannel DeliveryChannels = "email"
+	InAppChannel DeliveryChannels = "in_app"
 )
 
-// custom type
-
-type Event struct {
+type NotificationTemplete struct {
 	gorm.Model
-	UniversityId         string
-	CategoryId           string
-	CreatedById          string
-	Title                string
-	Descritpion          string
-	Location             string
-	StartDate            time.Time
-	EndDate              time.Time
-	CoverImageUrl        string
-	RequiresRegistration bool
-	MaxAttendees         int
-	Status               string
+	UniversityId string
+	Key          string
+	Title        string
+	Body         string
+	Channel      DeliveryChannels `gorm:"default:'push'"`
 }

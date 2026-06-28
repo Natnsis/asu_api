@@ -6,11 +6,21 @@ import (
 	"gorm.io/gorm"
 )
 
+// custom types
+type MealType string
+
+// custom enums
+const (
+	DraftMeal     MealType = "draft"
+	PublishedMeal MealType = "published"
+	ArchivedMeal  MealType = "archived"
+)
+
 type MealPlan struct {
 	gorm.Model
-	cafeteriaId   string
-	weekStartDate time.Time
-	weekEndDate   time.Time
-	createdById   string
-	status        string
+	CafeteriaId   string
+	WeekStartDate time.Time
+	WeekEndDate   time.Time
+	CreatedById   string
+	Status        MealType `gorm:"default:'draft'"`
 }

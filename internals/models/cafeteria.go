@@ -8,10 +8,10 @@ import (
 
 type Cafeteria struct {
 	gorm.Model
-	univeristyId string
-	name         string
-	location     string
-	openTime     time.Time
-	closeTime    time.Time
-	isActive     bool
+	UniveristyId string
+	Name         string
+	Location     string
+	OpenTime     time.Time
+	CloseTime    time.Time
+	IsActive     bool
 }

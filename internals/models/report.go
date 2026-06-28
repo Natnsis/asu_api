@@ -6,16 +6,26 @@ import (
 	"gorm.io/gorm"
 )
 
+// cusom types
+type ReportStatus string
+
+// custom enums
+const (
+	ReportDraft     ReportStatus = "draft"
+	ReportPublished ReportStatus = "published"
+	ReportArchived  ReportStatus = "archived"
+)
+
 type Report struct {
 	gorm.Model
-	universityId string
-	categoryId   string
-	createdById  string
-	departmentId string
-	title        string
-	description  string
-	fileUrl      string
-	fileType     string
-	status       string
-	publishedAt  time.Time
+	UniversityId string
+	CategoryId   string
+	CreatedById  string
+	DepartmentId string
+	Title        string
+	Description  string
+	FileUrl      string
+	FileType     string
+	Status       ReportStatus `gorm:"ReportStatus='draft'"`
+	PublishedAt  time.Time
 }

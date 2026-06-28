@@ -2,11 +2,21 @@ package models
 
 import "gorm.io/gorm"
 
+// custom types
+type DeliveryChannels string
+
+// custom enum
+const (
+	PushChannel  DeliveryChannels = "push"
+	EmailChannel DeliveryChannels = "email"
+	InAppChannel DeliveryChannels = "in_app"
+)
+
 type NotificationTemplete struct {
 	gorm.Model
-	universityId string
-	key          string
-	title        string
-	body         string
-	channel      string
+	UniversityId string
+	Key          string
+	Title        string
+	Body         string
+	Channel      []DeliveryChannels `gorm:"default:'push'"`
 }

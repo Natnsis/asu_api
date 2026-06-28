@@ -8,14 +8,14 @@ import (
 
 type Notification struct {
 	gorm.Model
-	userId       string
-	univeristyId string
-	templeteId   string
-	title        string
-	body         string
-	channel      string
-	isRead       bool
-	readAt       time.Time
-	entryType    string
-	entryId      string
+	UserId       string
+	UniveristyId string
+	TempleteId   string
+	Title        string
+	Body         string
+	Channel      DeliveryChannels
+	IsRead       bool
+	ReadAt       time.Time
+	EntryType    string
+	EntryId      string
 }
