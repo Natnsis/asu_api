@@ -2,13 +2,16 @@ package models
 
 import "gorm.io/gorm"
 
-type Lounges struct {
+type Lounge struct {
 	gorm.Model
-	UniversityId string
+	UniversityID uint
 	Name         string
 	Location     string
 	Capacity     int
 	Amenities    []string
 	ImageUrl     string
 	IsActive     bool
+
+	LoungeAvailablity []LoungeAvailablity
+	LoungeBooking     []LoungeBooking
 }

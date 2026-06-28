@@ -32,4 +32,7 @@ type User struct {
 	Role         UserRole `gorm:"default:'student'"`
 	IsActive     bool
 	LastLoginAt  *time.Time
+
+	Notification []Notification
+	Audit        []Audit
 }

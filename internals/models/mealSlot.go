@@ -27,9 +27,11 @@ const (
 
 type MealSlot struct {
 	gorm.Model
-	MealPlanId  string
+	MealPlanID  uint
 	DayOfWeek   DaysType
 	MealPeriod  string
 	MealName    MealType
 	Descritpion string
+
+	MealPlan MealPlan
 }

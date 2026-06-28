@@ -4,8 +4,10 @@ import "gorm.io/gorm"
 
 type ComplaintResponse struct {
 	gorm.Model
-	ComplaintId   string
+	ComplaintID   uint
 	RespondedById string
 	Message       string
 	IsInternal    bool
+
+	Complaint Complaint
 }

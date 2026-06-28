@@ -8,10 +8,13 @@ import (
 
 type Cafeteria struct {
 	gorm.Model
-	UniveristyId string
+	UniveristyID uint
 	Name         string
 	Location     string
 	OpenTime     time.Time
 	CloseTime    time.Time
 	IsActive     bool
+
+	MealPlan     []MealPlan
+	MealOverride []MealOverride
 }

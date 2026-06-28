@@ -23,6 +23,8 @@ type Gallery struct {
 	title        string
 	description  string
 	coverMediaId string
-	status       GalleryStatus `gorm:"default:'draft'`
+	status       GalleryStatus `gorm:"default:'draft'"`
 	publishedAt  time.Time
+
+	GalleryMedia []GalleryMedia
 }

@@ -29,15 +29,17 @@ const (
 
 type Complaint struct {
 	gorm.Model
-	UniversityId  string
-	StudentId     string
-	CategoryId    string
-	DepartmentId  string
-	Title         string
-	Descritpion   string
-	AttachmentUrl string
-	Priority      Priorities `gorm:"default:'log'"`
-	Status        Statuses   `gorm:"default:'submitted'"`
-	AssignedTold  string
-	ResolvedAt    time.Time
+	UniversityId        string
+	StudentId           string
+	CategoryId          string
+	DepartmentId        string
+	Title               string
+	Descritpion         string
+	AttachmentUrl       string
+	Priority            Priorities `gorm:"default:'log'"`
+	Status              Statuses   `gorm:"default:'submitted'"`
+	AssignedTold        string
+	ResolvedComplaintAt time.Time
+
+	ComplaintResponse []ComplaintResponse
 }

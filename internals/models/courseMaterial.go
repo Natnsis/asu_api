@@ -16,11 +16,13 @@ const (
 
 type CourseMaterial struct {
 	gorm.Model
-	CourseId     string
+	CourseID     uint
 	UploadedById string
 	Title        string
 	Types        Types `gorm:"default:'pdf'"`
 	Url          string
 	WeekNumber   int
 	SemesterId   string
+
+	Course Course
 }

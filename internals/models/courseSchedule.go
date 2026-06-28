@@ -28,11 +28,13 @@ const (
 
 type CourseSchedule struct {
 	gorm.Model
-	CourseID   string
-	SemesterID string
+	CourseID   uint
+	SemesterID uint
 	DayOfWeek  DayOfWeek `gorm:"default:'monday'"`
 	StartTime  string
 	EndTime    string
 	Venue      string
 	Types      Type `gorm:"default:'lecture'"`
+
+	Course Course
 }

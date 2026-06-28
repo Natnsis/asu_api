@@ -19,12 +19,14 @@ const (
 
 type LoungeBooking struct {
 	gorm.Model
-	LoungeId   string
-	BookedById string
+	LoungeID   uint
+	BookedByID uint
 	Date       time.Time
 	StartTime  time.Time
 	EndTime    time.Time
 	Attendees  int
 	Purpose    string
 	Status     LoungeStatus `gorm:"default:'pending'"`
+
+	Lounge Lounge
 }

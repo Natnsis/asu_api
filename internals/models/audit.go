@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Audit struct {
 	gorm.Model
-	ActorId       string
-	UniversityId  string
+	UserID        string
+	UniversityID  string
 	Action        string
 	EntityType    string
 	EntityId      string
@@ -13,4 +13,6 @@ type Audit struct {
 	NewValue      string
 	IpAddress     string
 	UserAgent     string
+
+	User User
 }

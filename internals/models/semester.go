@@ -13,4 +13,6 @@ type Semester struct {
 	StartDate    time.Time
 	EndDate      time.Time
 	IsCurrent    bool
+
+	CourseSchedule CourseSchedule
 }
