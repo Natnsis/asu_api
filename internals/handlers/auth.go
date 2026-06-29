@@ -27,4 +27,13 @@ func GeneratedAccessToken(userID uint, email string) (string, error) {
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
 }
 
-func GeneratedRefreshToken(userID uint, email string) (string, error) {}
+func GeneratedRefreshToken(userID uint, email string) (string, error) {
+	claims := Claims{
+		UserID: userID,
+		Email:  email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(7 * 24 * time.Hour)),
+		},
+	}
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
+}
