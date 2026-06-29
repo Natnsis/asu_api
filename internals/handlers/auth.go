@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"os"
+	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -15,5 +16,15 @@ type Claims struct {
 var secret = []byte(os.Getenv("JWT_SECRET"))
 
 func GeneratedAccessToken(userID uint, email string) (string, error) {
+	claims := Claims{
+		UserID: userID,
+		Email:  email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+		},
+	}
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
 }
+
 func GeneratedRefreshToken(userID uint, email string) (string, error) {}
