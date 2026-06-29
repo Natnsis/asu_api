@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -36,4 +37,22 @@ func GeneratedRefreshToken(userID uint, email string) (string, error) {
 		},
 	}
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(secret)
+}
+
+func ParseToken(tokenStr string) (*Claims, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (interface{}, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
+		return secret, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(*Claims)
+	if !ok || !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+	return claims, nil
 }
